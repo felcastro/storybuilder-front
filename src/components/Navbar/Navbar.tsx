@@ -40,6 +40,9 @@ export default function Navbar() {
           <Button colorScheme="primary" onClick={toggleColorMode}>
             {colorMode}
           </Button>
+          <Button colorScheme="primary" variant="link" onClick={toggleColorMode}>
+            {colorMode}
+          </Button>
           <a href="/signin">
             <Button colorScheme="primary" variant="ghost">
               Sign in

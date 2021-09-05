@@ -1,13 +1,98 @@
 import { ComponentPropsWithoutRef } from "react";
-import styled from "styled-components";
-import { useTheme } from "../../contexts/ThemeProvider";
+import styled, {
+  css,
+  FlattenInterpolation,
+  ThemedStyledProps,
+} from "styled-components";
+import { toRgba } from "../../utils";
 
 interface BaseButtonProps {
-  bg: number;
-  bgHover: string;
-  bgActive: string;
-  border?: string;
+  variant: ButtonVariantStyle;
+  colorScheme: string;
 }
+
+const variantSolid = css<BaseButtonProps>`
+  background: ${({ colorScheme, theme }) =>
+    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
+  color: ${({ theme }) => theme.mode("white", "black")};
+  &:hover {
+    background: ${({ colorScheme, theme }) =>
+      theme.mode(
+        theme.colors[colorScheme][600],
+        theme.colors[colorScheme][300]
+      )};
+  }
+  &:active {
+    background: ${({ colorScheme, theme }) =>
+      theme.mode(
+        theme.colors[colorScheme][700],
+        theme.colors[colorScheme][400]
+      )};
+  }
+`;
+
+const variantOutline = css<BaseButtonProps>`
+  border: 1px solid
+    ${({ colorScheme, theme }) =>
+      theme.mode(
+        theme.colors[colorScheme][500],
+        theme.colors[colorScheme][200]
+      )};
+  color: ${({ colorScheme, theme }) =>
+    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
+  &:hover {
+    background: ${({ colorScheme, theme }) =>
+      theme.mode(
+        toRgba(theme.colors[colorScheme][600], 0.12),
+        toRgba(theme.colors[colorScheme][300], 0.12)
+      )};
+  }
+  &:active {
+    background: ${({ colorScheme, theme }) =>
+      theme.mode(
+        toRgba(theme.colors[colorScheme][700], 0.24),
+        toRgba(theme.colors[colorScheme][400], 0.24)
+      )};
+  }
+`;
+
+const variantGhost = css<BaseButtonProps>`
+  color: ${({ colorScheme, theme }) =>
+    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
+  &:hover {
+    background: ${({ colorScheme, theme }) =>
+      theme.mode(
+        toRgba(theme.colors[colorScheme][600], 0.12),
+        toRgba(theme.colors[colorScheme][300], 0.12)
+      )};
+  }
+  &:active {
+    background: ${({ colorScheme, theme }) =>
+      theme.mode(
+        toRgba(theme.colors[colorScheme][700], 0.24),
+        toRgba(theme.colors[colorScheme][400], 0.24)
+      )};
+  }
+`;
+
+const variantLink = css<BaseButtonProps>`
+  color: ${({ colorScheme, theme }) =>
+    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
+  &:hover {
+    text-decoration: underline;
+  }
+  &:active {
+    color: ${({ colorScheme, theme }) =>
+      theme.mode(
+        theme.colors[colorScheme][700],
+        theme.colors[colorScheme][400]
+      )};
+  }
+`;
+
+type ButtonVariantStyle = FlattenInterpolation<
+  ThemedStyledProps<BaseButtonProps, any>
+>;
 
 const BaseButton = styled.button<BaseButtonProps>`
   font-size: ${({ theme }) => theme.fontSizes.md};
@@ -18,35 +103,31 @@ const BaseButton = styled.button<BaseButtonProps>`
   justify-content: center;
   position: relative;
   white-space: nowrap;
-  border-radius: ${({ theme }) => theme.borderRadius.base};
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   font-weight: 600;
   padding-inline: 1rem;
   padding-block: 0.5rem;
   cursor: pointer;
   border: 0px;
   transition: background-color 0.2s;
-  ${({ border }) => border && `border: ${border}`};
-  color: ${({ color }) => color};
-  background: ${({ bg }) => bg};
-  &:hover {
-    background: ${({ bgHover }) => bgHover};
-  }
-  &:active {
-    background: ${({ bgActive }) => bgActive};
-  }
+  background: inherit;
+  color: ${({ theme }) => theme.main.color};
+  ${({ variant }) => variant};
 `;
 
+type ButtonVariant = "solid" | "outline" | "ghost" | "link";
+
+const variants: Record<ButtonVariant, ButtonVariantStyle> = {
+  solid: variantSolid,
+  outline: variantOutline,
+  ghost: variantGhost,
+  link: variantLink,
+};
+
 interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
-  variant?: "solid" | "outline" | "ghost" | "none";
+  variant?: ButtonVariant;
   colorScheme?: string;
   isLoading?: boolean;
-}
-
-function toRgba(color: string, opacity: number) {
-  const red = parseInt(color.slice(1, 3), 16);
-  const green = parseInt(color.slice(3, 5), 16);
-  const blue = parseInt(color.slice(5, 7), 16);
-  return `rgba(${red}, ${green}, ${blue}, ${opacity})`;
 }
 
 export const Button = ({
@@ -56,26 +137,12 @@ export const Button = ({
   children,
   ...props
 }: ButtonProps) => {
-  const { theme, colorMode } = useTheme();
-  const color = theme.colors[colorScheme];
-
-  const isDarkTheme = colorMode === "dark";
-  const isSolid = variant === "solid";
-
-  const bgColor = color[isDarkTheme ? 200 : 500];
-  const bgHoverColor = color[isDarkTheme ? 300 : 600];
-  const bgActiveColor = color[isDarkTheme ? 400 : 700];
-
-  const styles = {
-    bg: isSolid ? bgColor : "transparent",
-    bgHover: isSolid ? bgHoverColor : toRgba(bgHoverColor, 0.12),
-    bgActive: isSolid ? bgActiveColor : toRgba(bgActiveColor, 0.24),
-    color: isSolid ? (isDarkTheme ? "black" : "white") : bgColor,
-    border: variant === "outline" ? `1px solid ${bgColor}` : undefined,
-  };
-
   return (
-    <BaseButton {...styles} {...props}>
+    <BaseButton
+      variant={variants[variant]}
+      colorScheme={colorScheme}
+      {...props}
+    >
       {children}
     </BaseButton>
   );

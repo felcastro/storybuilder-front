@@ -28,6 +28,7 @@ export const ThemeProvider: ThemeProviderType = ({ children }) => {
 
   const theme = {
     colorMode,
+    mode: (a: any, b: any) => (colorMode === "light" ? a : b),
     ...baseTheme,
     main: colorMode === "light" ? lightTheme : darkTheme,
   };

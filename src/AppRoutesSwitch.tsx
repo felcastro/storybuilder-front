@@ -1,36 +1,9 @@
-import {
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 const AppRoutesSwitch = () => {
   return (
     <Switch>
-      <Route
-        exact
-        path="/"
-        component={() => (
-          <>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-            <div style={{ height: "10rem" }}>lol</div>
-          </>
-        )}
-      />
+      <Route exact path="/" component={() => <div>home</div>} />
       <Route exact path="/explore" component={() => <div>explore</div>} />
       <Route exact path="/favorites" component={() => <div>favorites</div>} />
 

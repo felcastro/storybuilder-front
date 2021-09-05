@@ -59,9 +59,7 @@ const SidebarItemLink = styled(Link)<SidebarItemLinkProps>`
 
   &:hover {
     background: ${({ theme }) =>
-      theme.colorMode === "dark"
-        ? theme.colors.gray[800]
-        : theme.colors.gray[50]};
+      theme.mode(theme.colors.gray[50], theme.colors.gray[800])};
   }
 `;
 
