@@ -1,26 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from "styled-components";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+} from "react-router-dom";
 
-function App() {
+import AppRoutesSwitch from "./AppRoutesSwitch";
+import Navbar from "./components/Navbar";
+import Sidebar from "./components/Sidebar/Sidebar";
+import { ThemeProvider } from "./contexts/ThemeProvider";
+
+const Main = styled.main`
+  width: 100%;
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+`;
+
+const WrapperMainContent = styled.div`
+  flex: 1;
+`;
+
+export default function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider>
+      <Router>
+        <Navbar />
+        <Main>
+          <Wrapper>
+            <Sidebar />
+            <WrapperMainContent>
+              <AppRoutesSwitch />
+            </WrapperMainContent>
+          </Wrapper>
+        </Main>
+      </Router>
+    </ThemeProvider>
   );
 }
-
-export default App;
