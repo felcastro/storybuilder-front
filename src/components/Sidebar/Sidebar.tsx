@@ -124,7 +124,6 @@ export default function Sidebar() {
 
   return (
     <SidebarContent>
-      {location.pathname}
       {groups?.map((g) => (
         <SidebarGroup key={g.id}>
           {g.label && (
