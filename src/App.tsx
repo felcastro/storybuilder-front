@@ -1,10 +1,5 @@
 import styled from "styled-components";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch,
-} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import AppRoutesSwitch from "./AppRoutesSwitch";
 import Navbar from "./components/Navbar";
