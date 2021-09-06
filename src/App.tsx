@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { BrowserRouter as Router } from "react-router-dom";
 
 import AppRoutesSwitch from "./AppRoutesSwitch";
-import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar/Sidebar";
+import { Navbar } from "./components/Navbar";
+import { Sidebar } from "./components/Sidebar";
 import { ThemeProvider } from "./contexts/ThemeProvider";
 
 const Main = styled.main`
