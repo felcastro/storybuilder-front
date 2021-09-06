@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../../components/Button";
+import { Spinner } from "../../components/Spinner";
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -77,6 +78,10 @@ export const Home = () => {
         <Button variant="outline">Outline</Button>
         <Button variant="ghost">Ghost</Button>
         <Button variant="link">Link</Button>
+      </Row>
+      <Row>
+        <Spinner colorScheme="primary" />
+        <Spinner />
       </Row>
     </Wrapper>
   );

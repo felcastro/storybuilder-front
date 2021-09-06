@@ -5,6 +5,7 @@ import styled, {
   ThemedStyledProps,
 } from "styled-components";
 import { toRgba } from "../../utils";
+import { Spinner } from "../Spinner";
 
 interface VariantStyleProps {
   colorScheme: string;
@@ -152,10 +153,18 @@ const BaseButton = styled.button<BaseButtonProps>`
   cursor: pointer;
   border: 0px;
   transition: background-color 0.2s;
+  transition: color 0.2s;
   background: inherit;
   color: ${({ theme }) => theme.main.color};
   ${({ variant }) => variants[variant]};
   ${({ isLoading, isDisabled }) => (isLoading || isDisabled) && disabledStyle};
+  ${({ isLoading, isDisabled }) =>
+    (isLoading || isDisabled) &&
+    `
+    *:not(:last-child) {
+      opacity: 0;
+    }
+  `};
 `;
 
 interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
@@ -182,7 +191,18 @@ export const Button = ({
       disabled={isLoading || isDisabled}
       {...props}
     >
-      {isLoading && !isDisabled ? "Loading..." : children}
+      {isLoading && !isDisabled ? (
+        <>
+          <span>{children}</span>
+          <Spinner
+            colorScheme={colorScheme}
+            useFontColor={variant === "solid"}
+            style={{ position: "absolute" }}
+          />
+        </>
+      ) : (
+        children
+      )}
     </BaseButton>
   );
 };
