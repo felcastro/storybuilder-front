@@ -1,9 +1,10 @@
 import { Redirect, Route, Switch } from "react-router-dom";
+import { Home } from "./pages/Home";
 
 const AppRoutesSwitch = () => {
   return (
     <Switch>
-      <Route exact path="/" component={() => <div>home</div>} />
+      <Route exact path="/" component={() => <Home />} />
       <Route exact path="/explore" component={() => <div>explore</div>} />
       <Route exact path="/favorites" component={() => <div>favorites</div>} />
 
