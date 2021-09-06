@@ -117,7 +117,7 @@ const groups = [
   },
 ];
 
-export default function Sidebar() {
+export const Sidebar = () => {
   const location = useLocation();
 
   return (
@@ -143,4 +143,4 @@ export default function Sidebar() {
       ))}
     </SidebarContent>
   );
-}
+};

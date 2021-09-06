@@ -29,7 +29,7 @@ const NavbarNav = styled.div`
   }
 `;
 
-export default function Navbar() {
+export const Navbar = () => {
   const { colorMode, toggleColorMode } = useTheme();
 
   return (
@@ -38,9 +38,6 @@ export default function Navbar() {
         <NavbarHeading>storybuilder</NavbarHeading>
         <NavbarNav>
           <Button colorScheme="primary" onClick={toggleColorMode}>
-            {colorMode}
-          </Button>
-          <Button colorScheme="primary" variant="link" onClick={toggleColorMode}>
             {colorMode}
           </Button>
           <a href="/signin">
@@ -57,4 +54,4 @@ export default function Navbar() {
       </NavbarContent>
     </NavbarContentOuter>
   );
-}
+};
