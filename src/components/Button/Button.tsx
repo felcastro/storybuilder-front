@@ -152,8 +152,7 @@ const BaseButton = styled.button<BaseButtonProps>`
   padding-block: 0.5rem;
   cursor: pointer;
   border: 0px;
-  transition: background-color 0.2s;
-  transition: color 0.2s;
+  transition: all 0.2s;
   background: inherit;
   color: ${({ theme }) => theme.main.color};
   ${({ variant }) => variants[variant]};
