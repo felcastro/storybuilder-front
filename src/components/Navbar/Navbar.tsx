@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useTheme } from "../../contexts/ThemeProvider";
 import { Button } from "../Button";
-import { Link } from "../Link";
+import { LinkButton } from "../LinkButton";
 
 const NavbarContentOuter = styled.header`
   position: sticky;
@@ -41,12 +41,12 @@ export const Navbar = () => {
           <Button colorScheme="primary" onClick={toggleColorMode}>
             {colorMode}
           </Button>
-          <Link to="/signin" colorScheme="primary" variant="ghost">
+          <LinkButton to="/signin" colorScheme="primary" variant="ghost">
             Sign in
-          </Link>
-          <Link to="/signup" colorScheme="primary" variant="outline">
+          </LinkButton>
+          <LinkButton to="/signup" colorScheme="primary" variant="outline">
             Sign up
-          </Link>
+          </LinkButton>
         </NavbarNav>
       </NavbarContent>
     </NavbarContentOuter>

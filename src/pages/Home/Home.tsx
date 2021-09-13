@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { Button } from "../../components/Button";
-import { Link } from "../../components/Link";
+import { LinkButton } from "../../components/LinkButton";
 import { Spinner } from "../../components/Spinner";
-import { Link as RouterLink } from "react-router-dom";
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -84,10 +83,10 @@ export const Home = () => {
         <Button variant="link">Link</Button>
       </Row>
       <Row>
-        <Link to="/" colorScheme="primary">
+        <LinkButton to="/" colorScheme="primary" variant="outline">
           test
-        </Link>
-        <Link to="/">test</Link>
+        </LinkButton>
+        <LinkButton to="/">test</LinkButton>
       </Row>
       <Row>
         <Spinner colorScheme="primary" />
