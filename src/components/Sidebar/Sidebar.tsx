@@ -49,11 +49,7 @@ const SidebarItemLink = styled(Link)<SidebarItemLinkProps>`
   ${({ $isSelected, theme }) =>
     $isSelected &&
     `
-    background: ${
-      theme.colorMode === "dark"
-        ? theme.colors.gray[800]
-        : theme.colors.gray[50]
-    };
+    background: ${theme.mode(theme.colors.gray[50], theme.colors.gray[800])};
     font-weight: bold;
   `}
 

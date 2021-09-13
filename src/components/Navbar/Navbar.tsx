@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { useTheme } from "../../contexts/ThemeProvider";
 import { Button } from "../Button";
+import { Link } from "../Link";
 
 const NavbarContentOuter = styled.header`
   position: sticky;
   width: 100%;
   top: 0;
   z-index: 3;
-  background: ${({ theme }) => theme.main.bg};
+  background: ${({ theme }) => theme.main.background};
   border-bottom: 1px solid ${({ theme }) => theme.main.borderColor};
 `;
 
@@ -40,16 +41,12 @@ export const Navbar = () => {
           <Button colorScheme="primary" onClick={toggleColorMode}>
             {colorMode}
           </Button>
-          <a href="/signin">
-            <Button colorScheme="primary" variant="ghost">
-              Sign in
-            </Button>
-          </a>
-          <a href="/signup">
-            <Button colorScheme="primary" variant="outline">
-              Sign up
-            </Button>
-          </a>
+          <Link to="/signin" colorScheme="primary" variant="ghost">
+            Sign in
+          </Link>
+          <Link to="/signup" colorScheme="primary" variant="outline">
+            Sign up
+          </Link>
         </NavbarNav>
       </NavbarContent>
     </NavbarContentOuter>

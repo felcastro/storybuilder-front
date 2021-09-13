@@ -1,16 +1,39 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { ThemeProvider as StyleThemeProvider } from "styled-components";
-import { GlobalStyle, baseTheme, lightTheme, darkTheme } from "../../theme";
+import {
+  DefaultTheme,
+  ThemeProvider as StyleThemeProvider,
+} from "styled-components";
+import {
+  GlobalStyle,
+  baseTheme,
+  lightTheme,
+  darkTheme,
+  ColorMode,
+} from "../../theme";
 
-type ThemeContextType = Record<string, any>;
+const ThemeContext = createContext({
+  theme: {
+    ...baseTheme,
+    main: darkTheme,
+    mode: <T, U>(lightValue: T, darkValue: U) =>
+      darkValue ? darkValue : lightValue,
+  },
+  colorMode: "dark" as ColorMode,
+  toggleColorMode: () => {},
+});
+
+interface ThemeContextType {
+  theme: DefaultTheme;
+  colorMode: ColorMode;
+  toggleColorMode: () => void;
+}
+
 type ThemeProviderType = (props: React.PropsWithChildren<{}>) => JSX.Element;
 
-const ThemeContext = createContext({});
-
 export const ThemeProvider: ThemeProviderType = ({ children }) => {
-  const [colorMode, setColorMode] = useState("dark");
+  const [colorMode, setColorMode] = useState<ColorMode>("dark");
 
-  const setColorModeState = (colorMode: string) => {
+  const setColorModeState = (colorMode: ColorMode) => {
     localStorage.setItem("colorMode", colorMode);
     setColorMode(colorMode);
   };
@@ -23,12 +46,17 @@ export const ThemeProvider: ThemeProviderType = ({ children }) => {
 
   useEffect(() => {
     const localColorMode = localStorage.getItem("colorMode");
-    localColorMode && setColorMode(localColorMode);
+
+    if (localColorMode === "light" || localColorMode === "dark") {
+      setColorMode(localColorMode);
+    } else {
+      setColorModeState("dark");
+    }
   }, []);
 
-  const theme = {
-    colorMode,
-    mode: (a: any, b: any) => (colorMode === "light" ? a : b),
+  const theme: DefaultTheme = {
+    mode: <T, U>(lightValue: T, darkValue: U) =>
+      colorMode === "light" ? lightValue : darkValue,
     ...baseTheme,
     main: colorMode === "light" ? lightTheme : darkTheme,
   };
@@ -42,7 +70,7 @@ export const ThemeProvider: ThemeProviderType = ({ children }) => {
       }}
     >
       <StyleThemeProvider theme={theme}>
-        <GlobalStyle />
+        <GlobalStyle theme={theme} />
         {children}
       </StyleThemeProvider>
     </ThemeContext.Provider>

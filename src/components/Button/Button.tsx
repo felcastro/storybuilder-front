@@ -1,143 +1,18 @@
-import { ComponentPropsWithoutRef } from "react";
-import styled, {
-  css,
-  FlattenInterpolation,
-  ThemedStyledProps,
-} from "styled-components";
+import { ComponentPropsWithRef } from "react";
+import styled, { css, DefaultTheme, StyledComponent, StyledComponentPropsWithRef } from "styled-components";
+import { ColorScheme } from "../../theme/styled";
 import { toRgba } from "../../utils";
 import { Spinner } from "../Spinner";
 
-interface VariantStyleProps {
-  colorScheme: string;
-  isLoading: boolean;
-  isDisabled: boolean;
-}
-
-const variantSolidEvents = css<VariantStyleProps>`
-  &:hover {
-    background: ${({ colorScheme, theme }) =>
-      theme.mode(
-        theme.colors[colorScheme][600],
-        theme.colors[colorScheme][300]
-      )};
-  }
-  &:active {
-    background: ${({ colorScheme, theme }) =>
-      theme.mode(
-        theme.colors[colorScheme][700],
-        theme.colors[colorScheme][400]
-      )};
-  }
-`;
-
-const variantSolid = css<VariantStyleProps>`
-  background: ${({ colorScheme, theme }) =>
-    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
-  color: ${({ theme }) => theme.mode("white", "black")};
-  ${({ isLoading, isDisabled }) =>
-    !isLoading && !isDisabled && variantSolidEvents};
-`;
-
-const variantOutlineEvents = css<VariantStyleProps>`
-  &:hover {
-    background: ${({ colorScheme, theme }) =>
-      theme.mode(
-        toRgba(theme.colors[colorScheme][600], 0.12),
-        toRgba(theme.colors[colorScheme][300], 0.12)
-      )};
-  }
-  &:active {
-    background: ${({ colorScheme, theme }) =>
-      theme.mode(
-        toRgba(theme.colors[colorScheme][700], 0.24),
-        toRgba(theme.colors[colorScheme][400], 0.24)
-      )};
-  }
-`;
-
-const variantOutline = css<VariantStyleProps>`
-  border: 1px solid
-    ${({ colorScheme, theme }) =>
-      theme.mode(
-        theme.colors[colorScheme][500],
-        theme.colors[colorScheme][200]
-      )};
-  color: ${({ colorScheme, theme }) =>
-    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
-  ${({ isLoading, isDisabled }) =>
-    !isLoading && !isDisabled && variantOutlineEvents};
-`;
-
-const variantGhostEvents = css<VariantStyleProps>`
-  &:hover {
-    background: ${({ colorScheme, theme }) =>
-      theme.mode(
-        toRgba(theme.colors[colorScheme][600], 0.12),
-        toRgba(theme.colors[colorScheme][300], 0.12)
-      )};
-  }
-  &:active {
-    background: ${({ colorScheme, theme }) =>
-      theme.mode(
-        toRgba(theme.colors[colorScheme][700], 0.24),
-        toRgba(theme.colors[colorScheme][400], 0.24)
-      )};
-  }
-`;
-
-const variantGhost = css<VariantStyleProps>`
-  color: ${({ colorScheme, theme }) =>
-    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
-  ${({ isLoading, isDisabled }) =>
-    !isLoading && !isDisabled && variantGhostEvents};
-`;
-
-const variantLinkEvents = css<VariantStyleProps>`
-  &:hover {
-    text-decoration: underline;
-  }
-  &:active {
-    color: ${({ colorScheme, theme }) =>
-      theme.mode(
-        theme.colors[colorScheme][700],
-        theme.colors[colorScheme][400]
-      )};
-  }
-`;
-
-const variantLink = css<VariantStyleProps>`
-  color: ${({ colorScheme, theme }) =>
-    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
-  ${({ isLoading, isDisabled }) =>
-    !isLoading && !isDisabled && variantLinkEvents};
-`;
-
-type ButtonVariantStyle = FlattenInterpolation<
-  ThemedStyledProps<VariantStyleProps, any>
->;
-
 type ButtonVariant = "solid" | "outline" | "ghost" | "link";
-
-const variants: Record<ButtonVariant, ButtonVariantStyle> = {
-  solid: variantSolid,
-  outline: variantOutline,
-  ghost: variantGhost,
-  link: variantLink,
-};
-
-const disabledStyle = css`
-  opacity: 0.4;
-  cursor: not-allowed;
-`;
 
 interface BaseButtonProps {
   variant: ButtonVariant;
-  colorScheme: string;
-  isLoading: boolean;
+  colorScheme: ColorScheme;
   isDisabled: boolean;
 }
 
-const BaseButton = styled.button<BaseButtonProps>`
+export const BaseButton = styled.button<BaseButtonProps>`
   font-size: ${({ theme }) => theme.fontSizes.md};
   user-select: none;
   text-transform: none;
@@ -153,55 +28,207 @@ const BaseButton = styled.button<BaseButtonProps>`
   cursor: pointer;
   border: 0px;
   transition: all 0.2s;
-  background: inherit;
-  color: ${({ theme }) => theme.main.color};
-  ${({ variant }) => variants[variant]};
-  ${({ isLoading, isDisabled }) => (isLoading || isDisabled) && disabledStyle};
-  ${({ isLoading, isDisabled }) =>
-    (isLoading || isDisabled) &&
-    `
-    *:not(:last-child) {
-      opacity: 0;
-    }
-  `};
+  ${({ isDisabled }) =>
+    isDisabled &&
+    css`
+      opacity: 0.4;
+      cursor: not-allowed;
+    `};
 `;
 
-interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
-  variant?: ButtonVariant;
-  colorScheme?: string;
+const SolidButton = styled(BaseButton)`
+  background: ${({ colorScheme, theme }) =>
+    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
+  color: ${({ theme }) => theme.main.background};
+  ${({ isDisabled, colorScheme, theme }) =>
+    !isDisabled &&
+    css`
+      &:hover {
+        background: ${theme.mode(
+          theme.colors[colorScheme][600],
+          theme.colors[colorScheme][300]
+        )};
+      }
+      &:active {
+        background: ${theme.mode(
+          theme.colors[colorScheme][700],
+          theme.colors[colorScheme][400]
+        )};
+      }
+    `};
+`;
+
+const OutlineButton = styled(BaseButton)`
+  background: inherit;
+  border: 1px solid
+    ${({ colorScheme, theme }) =>
+      theme.mode(
+        theme.colors[colorScheme][500],
+        theme.colors[colorScheme][200]
+      )};
+  color: ${({ colorScheme, theme }) =>
+    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
+  ${({ isDisabled, colorScheme, theme }) =>
+    !isDisabled &&
+    css`
+      &:hover {
+        background: ${theme.mode(
+          theme.colors[colorScheme][500],
+          theme.colors[colorScheme][200]
+        )};
+        border-color: ${theme.mode(
+          theme.colors[colorScheme][500],
+          theme.colors[colorScheme][200]
+        )};
+        color: ${({ theme }) => theme.main.background};
+      }
+      &:active {
+        background: ${theme.mode(
+          theme.colors[colorScheme][700],
+          theme.colors[colorScheme][400]
+        )};
+        border-color: ${theme.mode(
+          theme.colors[colorScheme][700],
+          theme.colors[colorScheme][400]
+        )};
+      }
+    `};
+`;
+
+const GhostButton = styled(BaseButton)`
+  background: inherit;
+  color: ${({ colorScheme, theme }) =>
+    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
+  ${({ isDisabled, colorScheme, theme }) =>
+    !isDisabled &&
+    css`
+      &:hover {
+        background: ${theme.mode(
+          theme.colors[colorScheme][50],
+          toRgba(theme.colors[colorScheme][300], 0.12)
+        )};
+      }
+      &:active {
+        background: ${theme.mode(
+          theme.colors[colorScheme][100],
+          toRgba(theme.colors[colorScheme][400], 0.24)
+        )};
+      }
+    `};
+`;
+
+const LinkButton = styled(BaseButton)`
+  background: inherit;
+  color: ${({ colorScheme, theme }) =>
+    theme.mode(theme.colors[colorScheme][500], theme.colors[colorScheme][200])};
+  ${({ isDisabled, colorScheme, theme }) =>
+    !isDisabled &&
+    css`
+      &:hover {
+        text-decoration: underline;
+      }
+      &:active {
+        color: ${theme.mode(
+          theme.colors[colorScheme][700],
+          theme.colors[colorScheme][400]
+        )};
+      }
+    `};
+`;
+
+const buttonVariants: Record<
+  ButtonVariant,
+  StyledComponent<"button", DefaultTheme, BaseButtonProps, never>
+> = {
+  solid: SolidButton,
+  outline: OutlineButton,
+  ghost: GhostButton,
+  link: LinkButton,
+};
+
+export interface ButtonProps extends StyledComponentPropsWithRef<"button"> {
+  variant?: keyof typeof buttonVariants;
+  colorScheme?: ColorScheme;
   isLoading?: boolean;
   isDisabled?: boolean;
 }
 
-export const Button = ({
-  variant = "solid",
-  colorScheme = "gray",
-  isLoading = false,
-  isDisabled = false,
-  children,
-  ...props
-}: ButtonProps) => {
-  return (
-    <BaseButton
-      variant={variant}
-      colorScheme={colorScheme}
-      isLoading={isLoading}
-      isDisabled={isDisabled}
-      disabled={isLoading || isDisabled}
-      {...props}
-    >
-      {isLoading && !isDisabled ? (
-        <>
-          <span>{children}</span>
-          <Spinner
-            colorScheme={colorScheme}
-            useFontColor={variant === "solid"}
-            style={{ position: "absolute" }}
-          />
-        </>
-      ) : (
-        children
-      )}
-    </BaseButton>
-  );
-};
+export const Button = styled(
+  ({
+    variant = "solid",
+    colorScheme = "gray",
+    isLoading = false,
+    isDisabled = false,
+    children,
+    ...props
+  }: ButtonProps) => {
+    const ButtonComponent = buttonVariants[variant];
+
+    return (
+      <ButtonComponent
+        variant={variant}
+        colorScheme={colorScheme}
+        isDisabled={isLoading || isDisabled}
+        disabled={isLoading || isDisabled}
+        {...props}
+      >
+        {isLoading && !isDisabled ? (
+          <>
+            <span style={{ opacity: 0 }}>{children}</span>
+            <Spinner
+              colorScheme={colorScheme}
+              useFontColor={variant === "solid"}
+              style={{ position: "absolute" }}
+            />
+          </>
+        ) : (
+          children
+        )}
+      </ButtonComponent>
+    );
+  }
+)``;
+
+// const variants: Record<ButtonVariant, ButtonVariantStyle> = {
+//   outline: variantOutline,
+//   link: variantLink,
+// };
+
+// export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
+//   variant?: ButtonVariant;
+//   colorScheme?: ColorScheme;
+//   isLoading?: boolean;
+//   isDisabled?: boolean;
+// }
+
+// export const Button = ({
+//   variant = "outline",
+//   colorScheme = "gray",
+//   isLoading = false,
+//   isDisabled = false,
+//   children,
+//   ...props
+// }: ButtonProps) => {
+//   return (
+//     <BaseButton
+//       variant={variant}
+//       colorScheme={colorScheme}
+//       isDisabled={isLoading || isDisabled}
+//       disabled={isLoading || isDisabled}
+//       {...props}
+//     >
+//       {isLoading && !isDisabled ? (
+//         <>
+//           <span style={{ opacity: 0 }}>{children}</span>
+//           <Spinner
+//             colorScheme={colorScheme}
+//             useFontColor={variant === "outline"}
+//             style={{ position: "absolute" }}
+//           />
+//         </>
+//       ) : (
+//         children
+//       )}
+//     </BaseButton>
+//   );
+// };

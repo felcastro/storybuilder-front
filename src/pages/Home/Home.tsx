@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Button } from "../../components/Button";
+import { Link } from "../../components/Link";
 import { Spinner } from "../../components/Spinner";
+import { Link as RouterLink } from "react-router-dom";
 
 const Wrapper = styled.div`
   padding: 1rem;
@@ -9,7 +11,9 @@ const Wrapper = styled.div`
 const Row = styled.div`
   margin-bottom: 1rem;
 
-  *:not(:last-child) {
+  Button,
+  Button2,
+  svg:not(:last-child) {
     margin-right: 0.5rem;
   }
 `;
@@ -78,6 +82,12 @@ export const Home = () => {
         <Button variant="outline">Outline</Button>
         <Button variant="ghost">Ghost</Button>
         <Button variant="link">Link</Button>
+      </Row>
+      <Row>
+        <Link to="/" colorScheme="primary">
+          test
+        </Link>
+        <Link to="/">test</Link>
       </Row>
       <Row>
         <Spinner colorScheme="primary" />

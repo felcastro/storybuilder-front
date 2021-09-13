@@ -1,8 +1,9 @@
 import { ComponentPropsWithoutRef } from "react";
 import styled from "styled-components";
+import { ColorScheme } from "../../theme/styled";
 
 interface StyledSpinnerProps {
-  colorScheme: string;
+  colorScheme: ColorScheme;
   useFontColor: boolean;
 }
 
@@ -14,7 +15,7 @@ const StyledSpinner = styled.svg<StyledSpinnerProps>`
   & .path {
     stroke: ${({ colorScheme, useFontColor, theme }) =>
       useFontColor
-        ? theme.mode("white", "black")
+        ? theme.main.background
         : theme.mode(
             theme.colors[colorScheme][600],
             theme.colors[colorScheme][300]
@@ -45,7 +46,7 @@ const StyledSpinner = styled.svg<StyledSpinnerProps>`
 `;
 
 export interface SpinnerProps extends ComponentPropsWithoutRef<"svg"> {
-  colorScheme?: string;
+  colorScheme?: ColorScheme;
   useFontColor?: boolean;
 }
 
