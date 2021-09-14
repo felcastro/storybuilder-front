@@ -33,10 +33,10 @@ const buttonSizes: Record<ButtonSize, ButtonSizeProps> = {
     fontSize: "md",
   },
   lg: {
-    minWidth: 11,
-    height: 11,
+    minWidth: 10,
+    height: 10,
     padding: 6,
-    fontSize: "xl",
+    fontSize: "lg",
   },
 };
 
