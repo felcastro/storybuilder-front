@@ -1,5 +1,7 @@
 import "styled-components";
 
+type SpaceProps = Record<number, string>;
+
 type ColorScheme = "gray" | "primary";
 
 interface ColorSchemeProps {
@@ -47,6 +49,7 @@ interface BreakpointProps {
 }
 
 export interface BaseThemeProps {
+  spaces: SpaceProps;
   colors: ColorProps;
   boxShadows: BoxShadowProps;
   borderRadius: BorderRadiusProps;
