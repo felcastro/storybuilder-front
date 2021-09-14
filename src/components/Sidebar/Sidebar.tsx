@@ -1,5 +1,5 @@
 import { useLocation, Link, LinkProps } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const SidebarContent = styled.nav`
   position: sticky;
@@ -46,12 +46,13 @@ const SidebarItemLink = styled(Link)<SidebarItemLinkProps>`
   padding-inline: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+  transition: background-color 0.2s;
   ${({ $isSelected, theme }) =>
     $isSelected &&
-    `
-    background: ${theme.mode(theme.colors.gray[50], theme.colors.gray[800])};
-    font-weight: bold;
-  `}
+    css`
+      background: ${theme.mode(theme.colors.gray[50], theme.colors.gray[800])};
+      font-weight: bold;
+    `}
 
   &:hover {
     background: ${({ theme }) =>
