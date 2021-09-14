@@ -8,6 +8,8 @@ const Wrapper = styled.div`
 `;
 
 const Row = styled.div`
+  display: flex;
+  align-items: center;
   margin-bottom: 1rem;
 
   Button,
@@ -83,10 +85,21 @@ export const Home = () => {
         <Button variant="link">Link</Button>
       </Row>
       <Row>
+        <Button colorScheme="primary" size="sm">
+          Solid
+        </Button>
+        <Button colorScheme="primary" size="md">
+          Solid
+        </Button>
+        <Button colorScheme="primary" size="lg">
+          Solid
+        </Button>
+      </Row>
+      <Row>
         <LinkButton to="/" colorScheme="primary" variant="outline">
-          test
+          Link
         </LinkButton>
-        <LinkButton to="/">test</LinkButton>
+        <LinkButton to="/">Link</LinkButton>
       </Row>
       <Row>
         <Spinner colorScheme="primary" />

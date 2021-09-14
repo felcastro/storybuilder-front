@@ -4,19 +4,51 @@ import styled, {
   StyledComponent,
   StyledComponentPropsWithRef,
 } from "styled-components";
-import { ColorScheme } from "../../theme/styled";
+import { ColorScheme, FontSizeProps } from "../../theme/styled";
 import { toRgba } from "../../utils";
 import { Spinner } from "../Spinner";
 
+type ButtonSize = "sm" | "md" | "lg";
+
 type ButtonVariant = "solid" | "outline" | "ghost" | "link";
 
+interface ButtonSizeProps {
+  minWidth: number;
+  height: number;
+  padding: number;
+  fontSize: keyof FontSizeProps;
+}
+
+const buttonSizes: Record<ButtonSize, ButtonSizeProps> = {
+  sm: {
+    minWidth: 7,
+    height: 7,
+    padding: 3,
+    fontSize: "sm",
+  },
+  md: {
+    minWidth: 9,
+    height: 9,
+    padding: 4,
+    fontSize: "md",
+  },
+  lg: {
+    minWidth: 11,
+    height: 11,
+    padding: 6,
+    fontSize: "xl",
+  },
+};
+
 interface BaseButtonProps {
+  $size: ButtonSize;
   $colorScheme: ColorScheme;
   $isDisabled: boolean;
 }
 
 export const BaseButton = styled.button<BaseButtonProps>`
-  font-size: ${({ theme }) => theme.fontSizes.md};
+  font-size: ${({ theme, $size }) =>
+    theme.fontSizes[buttonSizes[$size].fontSize]};
   user-select: none;
   text-transform: none;
   display: inline-flex;
@@ -25,9 +57,11 @@ export const BaseButton = styled.button<BaseButtonProps>`
   position: relative;
   white-space: nowrap;
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  font-weight: 600;
-  padding-inline: 1rem;
-  height: 2.25rem;
+  /* font-weight: 600; */
+  padding-inline: ${({ theme, $size }) =>
+    theme.spaces[buttonSizes[$size].padding]};
+  min-width: ${({ theme, $size }) => theme.spaces[buttonSizes[$size].minWidth]};
+  height: ${({ theme, $size }) => theme.spaces[buttonSizes[$size].height]};
   cursor: pointer;
   border: 0px;
   transition: all 0.2s;
@@ -162,6 +196,7 @@ const buttonVariants: Record<
 };
 
 export interface ButtonProps extends StyledComponentPropsWithRef<"button"> {
+  size?: ButtonSize;
   variant?: keyof typeof buttonVariants;
   colorScheme?: ColorScheme;
   isLoading?: boolean;
@@ -169,6 +204,7 @@ export interface ButtonProps extends StyledComponentPropsWithRef<"button"> {
 }
 
 export const Button = ({
+  size = "md",
   variant = "solid",
   colorScheme = "gray",
   isLoading = false,
@@ -180,6 +216,7 @@ export const Button = ({
 
   return (
     <ButtonComponent
+      $size={size}
       $colorScheme={colorScheme}
       $isDisabled={isLoading || isDisabled}
       disabled={isLoading || isDisabled}
