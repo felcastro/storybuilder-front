@@ -2,23 +2,26 @@ import { ComponentPropsWithoutRef } from "react";
 import styled from "styled-components";
 import { ColorScheme } from "../../theme/styled";
 
+type SpinnerSize = "sm" | "md" | "lg";
+
 interface StyledSpinnerProps {
-  colorScheme: ColorScheme;
-  useFontColor: boolean;
+  $size: SpinnerSize;
+  $colorScheme: ColorScheme;
+  $useFontColor: boolean;
 }
 
 const StyledSpinner = styled.svg<StyledSpinnerProps>`
   animation: rotate 1s linear infinite;
-  width: ${({ theme }) => theme.fontSizes.md};
-  height: ${({ theme }) => theme.fontSizes.md};
+  width: ${({ theme, $size }) => theme.fontSizes[$size]};
+  height: ${({ theme, $size }) => theme.fontSizes[$size]};
 
   & .path {
-    stroke: ${({ colorScheme, useFontColor, theme }) =>
-      useFontColor
+    stroke: ${({ $colorScheme, $useFontColor, theme }) =>
+      $useFontColor
         ? theme.main.background
         : theme.mode(
-            theme.colors[colorScheme][600],
-            theme.colors[colorScheme][300]
+            theme.colors[$colorScheme][600],
+            theme.colors[$colorScheme][300]
           )};
     stroke-linecap: round;
     animation: dash 1.5s ease-in-out infinite;
@@ -46,18 +49,21 @@ const StyledSpinner = styled.svg<StyledSpinnerProps>`
 `;
 
 export interface SpinnerProps extends ComponentPropsWithoutRef<"svg"> {
+  size?: SpinnerSize;
   colorScheme?: ColorScheme;
   useFontColor?: boolean;
 }
 
 export const Spinner = ({
+  size = "md",
   colorScheme = "gray",
   useFontColor = false,
   ...props
 }: SpinnerProps) => (
   <StyledSpinner
-    colorScheme={colorScheme}
-    useFontColor={useFontColor}
+    $size={size}
+    $colorScheme={colorScheme}
+    $useFontColor={useFontColor}
     viewBox="0 0 50 50"
     {...props}
   >

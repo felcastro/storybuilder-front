@@ -228,6 +228,7 @@ export const Button = ({
           <Spinner
             colorScheme={colorScheme}
             useFontColor={variant === "solid"}
+            size={size}
             style={{ position: "absolute" }}
           />
         </>

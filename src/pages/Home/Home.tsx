@@ -96,6 +96,17 @@ export const Home = () => {
         </Button>
       </Row>
       <Row>
+        <Button colorScheme="primary" size="sm" isLoading>
+          Solid
+        </Button>
+        <Button colorScheme="primary" size="md" isLoading>
+          Solid
+        </Button>
+        <Button colorScheme="primary" size="lg" isLoading>
+          Solid
+        </Button>
+      </Row>
+      <Row>
         <LinkButton to="/" colorScheme="primary" variant="outline">
           Link
         </LinkButton>
