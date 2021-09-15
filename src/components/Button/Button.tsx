@@ -57,7 +57,6 @@ export const BaseButton = styled.button<BaseButtonProps>`
   position: relative;
   white-space: nowrap;
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  /* font-weight: 600; */
   padding-inline: ${({ theme, $size }) =>
     theme.spaces[buttonSizes[$size].padding]};
   min-width: ${({ theme, $size }) => theme.spaces[buttonSizes[$size].minWidth]};
