@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Button } from "../../components/Button";
+import { Input } from "../../components/Input";
 import { LinkButton } from "../../components/LinkButton";
 import { Spinner } from "../../components/Spinner";
 
@@ -116,6 +117,7 @@ export const Home = () => {
         <Spinner colorScheme="primary" />
         <Spinner />
       </Row>
+      <Input placeholder="Test"/>
     </Wrapper>
   );
 };

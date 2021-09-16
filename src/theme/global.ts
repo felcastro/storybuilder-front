@@ -77,6 +77,11 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0px;
     }
 
+    input {
+      color: inherit;
+      line-height: inherit;
+    }
+
     * {
         box-sizing: border-box;
     }
