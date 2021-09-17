@@ -48,6 +48,10 @@ interface BreakpointProps {
   xl: string;
 }
 
+interface ZIndicesProps {
+  modal: number;
+}
+
 export interface BaseThemeProps {
   spaces: SpaceProps;
   colors: ColorProps;
@@ -55,6 +59,7 @@ export interface BaseThemeProps {
   borderRadius: BorderRadiusProps;
   fontSizes: FontSizeProps;
   breakpoints: BreakpointProps;
+  zIndices: ZIndicesProps;
 }
 
 export interface ColorModeThemeProps {

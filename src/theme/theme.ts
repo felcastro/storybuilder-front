@@ -6,6 +6,7 @@ import {
   ColorModeThemeProps,
   ColorProps,
   FontSizeProps,
+  ZIndicesProps,
 } from "./";
 
 const spaces = {
@@ -68,8 +69,8 @@ const colors: ColorProps = {
     800: "#333333",
     900: "#1A1A1A",
   },
-  white: "#fff",
-  black: "#000",
+  white: "#ffffff",
+  black: "#000000",
 };
 
 const boxShadows: BoxShadowProps = {
@@ -98,6 +99,10 @@ const breakpoints: BreakpointProps = {
   xl: "80em",
 };
 
+const zIndices: ZIndicesProps = {
+  modal: 1400,
+};
+
 export const baseTheme: BaseThemeProps = {
   spaces,
   colors,
@@ -105,6 +110,7 @@ export const baseTheme: BaseThemeProps = {
   borderRadius,
   fontSizes,
   breakpoints,
+  zIndices,
 };
 
 export const lightTheme: ColorModeThemeProps = {
