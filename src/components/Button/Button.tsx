@@ -57,7 +57,9 @@ export const BaseButton = styled.button<BaseButtonProps>`
   position: relative;
   white-space: nowrap;
   border-radius: ${({ theme }) => theme.borderRadius.md};
-  padding-inline: ${({ theme, $size }) =>
+  padding-inline-start: ${({ theme, $size }) =>
+    theme.spaces[buttonSizes[$size].padding]};
+  padding-inline-end: ${({ theme, $size }) =>
     theme.spaces[buttonSizes[$size].padding]};
   min-width: ${({ theme, $size }) => theme.spaces[buttonSizes[$size].minWidth]};
   height: ${({ theme, $size }) => theme.spaces[buttonSizes[$size].height]};
@@ -163,12 +165,15 @@ const GhostButton = styled(BaseButton)`
 `;
 
 const LinkButton = styled(BaseButton)`
+  height: auto;
   background: inherit;
   color: ${({ $colorScheme, theme }) =>
     theme.mode(
       theme.colors[$colorScheme][500],
       theme.colors[$colorScheme][200]
     )};
+  padding-inline-start: 0;
+  padding-inline-end: 0;
   ${({ $isDisabled, $colorScheme, theme }) =>
     !$isDisabled &&
     css`
