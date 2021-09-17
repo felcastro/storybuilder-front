@@ -53,7 +53,7 @@ const variables = css`
 export const GlobalStyle = createGlobalStyle`
     html,
     body {
-        height: 100%;
+        min-height: 100%;
         padding: 0;
         margin: 0;
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -80,6 +80,10 @@ export const GlobalStyle = createGlobalStyle`
     input {
       color: inherit;
       line-height: inherit;
+    }
+
+    dl, dd, h1, h2, h3, h4, h5, h6, hr, figure, p, pre {
+      margin: 0;
     }
 
     * {
