@@ -2,7 +2,7 @@ import "styled-components";
 
 type SpaceProps = Record<number, string>;
 
-type ColorScheme = "gray" | "primary";
+type ColorScheme = "gray" | "primary" | "red";
 
 interface ColorSchemeProps {
   50: string;

@@ -117,7 +117,8 @@ export const Home = () => {
         <Spinner colorScheme="primary" />
         <Spinner />
       </Row>
-      <Input placeholder="Test"/>
+      <Input placeholder="Test" />
+      <Input placeholder="Test" isInvalid />
     </Wrapper>
   );
 };

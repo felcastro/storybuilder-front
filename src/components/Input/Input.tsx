@@ -26,6 +26,7 @@ const buttonSizes: Record<InputSize, InputSizeProps> = {
 interface StyledInputProps {
   $size: InputSize;
   $isDisabled: boolean;
+  $isInvalid: boolean;
 }
 
 export const StyledInput = styled.input<StyledInputProps>`
@@ -40,7 +41,11 @@ export const StyledInput = styled.input<StyledInputProps>`
   border-radius: ${({ theme }) => theme.borderRadius.md};
   outline: transparent solid 2px;
   outline-offset: 2px;
-  border: 1px solid ${({ theme }) => theme.main.borderColor};
+  border: 1px solid
+    ${({ $isInvalid, theme }) =>
+      $isInvalid
+        ? theme.mode(theme.colors.red[500], theme.colors.red[200])
+        : theme.main.borderColor};
   transition: background-color, color, border-color 0.2s;
   ${({ $isDisabled }) =>
     $isDisabled &&
@@ -70,16 +75,19 @@ export interface InputProps
   extends Omit<StyledComponentPropsWithRef<"input">, "size"> {
   size?: InputSize;
   isDisabled?: boolean;
+  isInvalid?: boolean;
 }
 
 export const Input = ({
   size = "md",
   isDisabled = false,
+  isInvalid = false,
   ...props
 }: InputProps) => (
   <StyledInput
     $size={size}
     $isDisabled={isDisabled}
+    $isInvalid={isInvalid}
     disabled={isDisabled}
     {...props}
   />
