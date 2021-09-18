@@ -1,4 +1,9 @@
-import styled, { css, StyledComponentPropsWithRef } from "styled-components";
+import { forwardRef } from "react";
+import styled, {
+  css,
+  DefaultTheme,
+  StyledComponentPropsWithRef,
+} from "styled-components";
 import { FontSizeProps } from "../../theme/styled";
 
 type InputSize = "sm" | "md" | "lg";
@@ -29,6 +34,26 @@ interface StyledInputProps {
   $isInvalid: boolean;
 }
 
+const getInputHoverStyle = (theme: DefaultTheme) => css`
+  &:hover {
+    border-color: ${theme.mode(theme.colors.gray[200], theme.colors.gray[700])};
+  }
+`;
+
+const getInputFocusStyle = (theme: DefaultTheme) => css`
+  &:focus {
+    border-color: ${theme.mode(
+      theme.colors.primary[500],
+      theme.colors.primary[200]
+    )};
+    box-shadow: ${theme.mode(
+        theme.colors.primary[500],
+        theme.colors.primary[200]
+      )}
+      0px 0px 0px 1px;
+  }
+`;
+
 export const StyledInput = styled.input<StyledInputProps>`
   width: 100%;
   height: ${({ theme, $size }) => theme.spaces[buttonSizes[$size].height]};
@@ -46,6 +71,11 @@ export const StyledInput = styled.input<StyledInputProps>`
       $isInvalid
         ? theme.mode(theme.colors.red[500], theme.colors.red[200])
         : theme.main.borderColor};
+  box-shadow: ${({ $isInvalid, theme }) =>
+      $isInvalid
+        ? theme.mode(theme.colors.red[500], theme.colors.red[200])
+        : "inherit"}
+    0px 0px 0px 1px;
   transition: background-color, color, border-color 0.2s;
   ${({ $isDisabled }) =>
     $isDisabled &&
@@ -53,22 +83,9 @@ export const StyledInput = styled.input<StyledInputProps>`
       opacity: 0.4;
       cursor: not-allowed;
     `};
-
-  ${({ $isDisabled, theme }) =>
-    !$isDisabled &&
-    css`
-      &:focus {
-        border-color: ${theme.mode(
-          theme.colors.primary[500],
-          theme.colors.primary[200]
-        )};
-        box-shadow: ${theme.mode(
-            theme.colors.primary[500],
-            theme.colors.primary[200]
-          )}
-          0px 0px 0px 1px;
-      }
-    `};
+  ${({ $isDisabled, $isInvalid, theme }) =>
+    !$isDisabled && !$isInvalid && getInputHoverStyle(theme)};
+  ${({ $isDisabled, theme }) => !$isDisabled && getInputFocusStyle(theme)};
 `;
 
 export interface InputProps
@@ -78,17 +95,23 @@ export interface InputProps
   isInvalid?: boolean;
 }
 
-export const Input = ({
-  size = "md",
-  isDisabled = false,
-  isInvalid = false,
-  ...props
-}: InputProps) => (
-  <StyledInput
-    $size={size}
-    $isDisabled={isDisabled}
-    $isInvalid={isInvalid}
-    disabled={isDisabled}
-    {...props}
-  />
+export const Input = forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
+      size = "md",
+      isDisabled = false,
+      isInvalid = false,
+      ...props
+    }: InputProps,
+    ref
+  ) => (
+    <StyledInput
+      $size={size}
+      $isDisabled={isDisabled}
+      $isInvalid={isInvalid}
+      disabled={isDisabled}
+      ref={ref}
+      {...props}
+    />
+  )
 );
