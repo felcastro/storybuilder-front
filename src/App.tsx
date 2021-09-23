@@ -5,6 +5,7 @@ import AppRoutesSwitch from "./AppRoutesSwitch";
 import { Navbar } from "./components/Navbar";
 import { Sidebar } from "./components/Sidebar";
 import { ThemeProvider } from "./contexts/ThemeProvider";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const Main = styled.main`
   width: 100%;
@@ -20,18 +21,20 @@ const WrapperMainContent = styled.div`
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <Router>
-        <Navbar />
-        <Main>
-          <Wrapper>
-            <Sidebar />
-            <WrapperMainContent>
-              <AppRoutesSwitch />
-            </WrapperMainContent>
-          </Wrapper>
-        </Main>
-      </Router>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider>
+        <Router>
+          <Navbar />
+          <Main>
+            <Wrapper>
+              <Sidebar />
+              <WrapperMainContent>
+                <AppRoutesSwitch />
+              </WrapperMainContent>
+            </Wrapper>
+          </Main>
+        </Router>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
