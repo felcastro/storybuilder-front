@@ -11,6 +11,7 @@ import { supabase } from "../../api/supabaseApi";
 interface AuthContextProps {
   user?: User;
   session?: Session;
+  signOut?: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({});
@@ -36,8 +37,12 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
     setSession(session);
   }
 
+  async function signOut(): Promise<void> {
+    await supabase.auth.signOut();
+  }
+
   return (
-    <AuthContext.Provider value={{ session, user }}>
+    <AuthContext.Provider value={{ session, user, signOut }}>
       {children}
     </AuthContext.Provider>
   );
