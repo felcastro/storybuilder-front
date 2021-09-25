@@ -32,7 +32,6 @@ const StyledModal = styled(motion.div).attrs({
 })`
   width: ${({ theme }) => theme.spaces[96]};
   background: ${({ theme }) => theme.main.background};
-  padding: ${({ theme }) => theme.spaces[4]};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   box-shadow: ${({ theme }) => theme.boxShadows.lg};
   z-index: 1400;
