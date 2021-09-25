@@ -11,6 +11,8 @@ import { createPortal } from "react-dom";
 import styled from "styled-components";
 import FocusLock from "react-focus-lock";
 import { Backdrop } from "../Backdrop";
+import { IconButton } from "../IconButton";
+import { FaTimes } from "react-icons/fa";
 
 const variants: Variants = {
   hidden: {
@@ -30,11 +32,18 @@ const StyledModal = styled(motion.div).attrs({
   exit: "hidden",
   transition: { duration: 0.05 },
 })`
+  position: relative;
   width: ${({ theme }) => theme.spaces[96]};
   background: ${({ theme }) => theme.main.background};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
   box-shadow: ${({ theme }) => theme.boxShadows.lg};
   z-index: 1400;
+`;
+
+const ModalCloseButton = styled(IconButton)`
+  position: absolute;
+  top: ${({ theme }) => theme.spaces[1]};
+  right: ${({ theme }) => theme.spaces[1]};
 `;
 
 const modalRoot = document.getElementById("modal-root");
@@ -80,7 +89,14 @@ export const Modal = ({ isOpen, onClose, children }: ModalProps) => {
               onClick={(e) => e.stopPropagation()}
               onMouseDown={onMouseDown}
             >
-              {children}
+              <>
+                {children}
+                <ModalCloseButton
+                  icon={<FaTimes />}
+                  ariaLabel="Close button"
+                  onClick={onClose}
+                />
+              </>
             </StyledModal>
           </FocusLock>
         </Backdrop>
