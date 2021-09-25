@@ -2,6 +2,16 @@ import "styled-components";
 
 type SpaceProps = Record<number, string>;
 
+interface SizeProps {
+  "3xs": string;
+  "2xs": string;
+  xs: string;
+  sm: string;
+  md: string;
+  lg: string;
+  xl: string;
+}
+
 type ColorScheme = "gray" | "primary" | "red";
 
 interface ColorSchemeProps {
@@ -54,6 +64,7 @@ interface ZIndicesProps {
 
 export interface BaseThemeProps {
   spaces: SpaceProps;
+  sizes: SizeProps;
   colors: ColorProps;
   boxShadows: BoxShadowProps;
   borderRadius: BorderRadiusProps;

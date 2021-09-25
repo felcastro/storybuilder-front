@@ -44,6 +44,16 @@ const spaces = {
   96: "24rem",
 };
 
+const sizes = {
+  "3xs": "14rem",
+  "2xs": "16rem",
+  xs: "20rem",
+  sm: "24rem",
+  md: "28rem",
+  lg: "32rem",
+  xl: "36rem",
+};
+
 const colors: ColorProps = {
   primary: {
     50: "#E5F3FF",
@@ -79,7 +89,7 @@ const colors: ColorProps = {
     600: "#C20A0A",
     700: "#910808",
     800: "#610505",
-    900: "#300303"
+    900: "#300303",
   },
   white: "#ffffff",
   black: "#000000",
@@ -117,6 +127,7 @@ const zIndices: ZIndicesProps = {
 
 export const baseTheme: BaseThemeProps = {
   spaces,
+  sizes,
   colors,
   boxShadows,
   borderRadius,
