@@ -7,6 +7,8 @@ import { authService } from "../../services/";
 import { Button } from "../Button";
 import { Modal } from "../Modal";
 import { AuthFormType, AuthForm } from "../AuthForm";
+import { IconButton } from "../IconButton";
+import { FaMoon, FaSun } from "react-icons/fa";
 
 const NavbarContentOuter = styled.header`
   position: sticky;
@@ -30,6 +32,8 @@ const NavbarHeading = styled.h2`
 `;
 
 const NavbarNav = styled.div`
+  display: flex;
+
   *:not(:last-child) {
     margin-right: 0.5rem;
   }
@@ -52,9 +56,10 @@ export const Navbar = () => {
       <NavbarContent>
         <NavbarHeading>storybuilder</NavbarHeading>
         <NavbarNav>
-          <Button colorScheme="primary" onClick={toggleColorMode}>
-            {colorMode}
-          </Button>
+          <IconButton
+            icon={colorMode === "dark" ? <FaSun /> : <FaMoon />}
+            onClick={toggleColorMode}
+          />
           {user ? (
             <Button variant="outline" onClick={authService.signOut}>
               Sign out
