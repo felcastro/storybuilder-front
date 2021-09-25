@@ -13,7 +13,7 @@ interface InputSizeProps {
   fontSize: keyof FontSizeProps;
 }
 
-const buttonSizes: Record<InputSize, InputSizeProps> = {
+const inputSizes: Record<InputSize, InputSizeProps> = {
   sm: {
     height: 7,
     fontSize: "sm",
@@ -56,13 +56,13 @@ const getInputFocusStyle = (theme: DefaultTheme) => css`
 
 export const StyledInput = styled.input<StyledInputProps>`
   width: 100%;
-  height: ${({ theme, $size }) => theme.spaces[buttonSizes[$size].height]};
+  height: ${({ theme, $size }) => theme.spaces[inputSizes[$size].height]};
   background: inherit;
   position: relative;
   padding-inline-start: ${({ theme }) => theme.spaces[4]};
   padding-inline-end: ${({ theme }) => theme.spaces[4]};
   font-size: ${({ theme, $size }) =>
-    theme.fontSizes[buttonSizes[$size].fontSize]};
+    theme.fontSizes[inputSizes[$size].fontSize]};
   border-radius: ${({ theme }) => theme.borderRadius.md};
   outline: transparent solid 2px;
   outline-offset: 2px;
