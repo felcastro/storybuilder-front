@@ -6,12 +6,11 @@ import {
   PropsWithChildren,
   createContext,
 } from "react";
-import { supabase } from "../../api/supabaseApi";
+import { authService } from "../../services";
 
 interface AuthContextProps {
   user?: User;
   session?: Session;
-  signOut?: () => void;
 }
 
 const AuthContext = createContext<AuthContextProps>({});
@@ -21,7 +20,7 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   const [session, setSession] = useState<Session>();
 
   useEffect(() => {
-    const { data } = supabase.auth.onAuthStateChange(async () => checkUser());
+    const { data } = authService.onAuthStateChange(async () => checkUser());
 
     checkUser();
 
@@ -31,18 +30,14 @@ export const AuthProvider = ({ children }: PropsWithChildren<{}>) => {
   }, []);
 
   async function checkUser(): Promise<void> {
-    const user = supabase.auth.user() || undefined;
-    const session = supabase.auth.session() || undefined;
+    const user = authService.getUser();
+    const session = authService.getSession();
     setUser(user);
     setSession(session);
   }
 
-  async function signOut(): Promise<void> {
-    await supabase.auth.signOut();
-  }
-
   return (
-    <AuthContext.Provider value={{ session, user, signOut }}>
+    <AuthContext.Provider value={{ session, user }}>
       {children}
     </AuthContext.Provider>
   );
