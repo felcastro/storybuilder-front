@@ -1,7 +1,12 @@
+import { useState } from "react";
 import styled from "styled-components";
+import { useAuth } from "../../contexts/AuthContext";
 import { useTheme } from "../../contexts/ThemeProvider";
+import { useToggle } from "../../hooks/useToggle";
+import { authService } from "../../services/";
 import { Button } from "../Button";
-import { LinkButton } from "../LinkButton";
+import { Modal } from "../Modal";
+import { AuthFormType, AuthForm } from "../AuthForm";
 
 const NavbarContentOuter = styled.header`
   position: sticky;
@@ -32,6 +37,15 @@ const NavbarNav = styled.div`
 
 export const Navbar = () => {
   const { colorMode, toggleColorMode } = useTheme();
+  const [isSignModalOpen, toggleSignModal] = useToggle();
+  const [selectedSignForm, setSelectedSignForm] = useState<AuthFormType>();
+
+  const { user } = useAuth();
+
+  function handleToggleSignModal(signForm: AuthFormType) {
+    toggleSignModal();
+    setSelectedSignForm(signForm);
+  }
 
   return (
     <NavbarContentOuter>
@@ -41,14 +55,33 @@ export const Navbar = () => {
           <Button colorScheme="primary" onClick={toggleColorMode}>
             {colorMode}
           </Button>
-          <LinkButton to="/signin" colorScheme="primary" variant="ghost">
-            Sign in
-          </LinkButton>
-          <LinkButton to="/signup" colorScheme="primary" variant="outline">
-            Sign up
-          </LinkButton>
+          {user ? (
+            <Button variant="outline" onClick={authService.signOut}>
+              Sign out
+            </Button>
+          ) : (
+            <>
+              <Button
+                colorScheme="primary"
+                variant="ghost"
+                onClick={() => handleToggleSignModal("signIn")}
+              >
+                Sign in
+              </Button>
+              <Button
+                colorScheme="primary"
+                variant="outline"
+                onClick={() => handleToggleSignModal("signUp")}
+              >
+                Sign up
+              </Button>
+            </>
+          )}
         </NavbarNav>
       </NavbarContent>
+      <Modal isOpen={isSignModalOpen} onClose={toggleSignModal}>
+        <AuthForm onSubmit={toggleSignModal} defaultForm={selectedSignForm} />
+      </Modal>
     </NavbarContentOuter>
   );
 };
