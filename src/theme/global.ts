@@ -88,6 +88,7 @@ export const GlobalStyle = createGlobalStyle`
 
     * {
         box-sizing: border-box;
+        transition: color, background-color 0.2s;
     }
 
     ${variables}
