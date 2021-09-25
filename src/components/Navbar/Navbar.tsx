@@ -58,6 +58,7 @@ export const Navbar = () => {
         <NavbarNav>
           <IconButton
             icon={colorMode === "dark" ? <FaSun /> : <FaMoon />}
+            ariaLabel="Color mode button"
             onClick={toggleColorMode}
           />
           {user ? (

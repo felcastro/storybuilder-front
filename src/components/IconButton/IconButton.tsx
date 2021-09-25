@@ -9,16 +9,23 @@ const StyledButton = styled(Button)`
 
 export interface IconButtonProps extends ButtonProps {
   icon: ReactNode;
+  ariaLabel: string;
 }
 
 export const IconButton = ({
   icon,
+  ariaLabel,
   variant = "ghost",
   colorScheme = "primary",
   children,
   ...props
 }: IconButtonProps) => (
-  <StyledButton variant={variant} colorScheme={colorScheme} {...props}>
+  <StyledButton
+    variant={variant}
+    colorScheme={colorScheme}
+    aria-label={ariaLabel}
+    {...props}
+  >
     {icon}
   </StyledButton>
 );
